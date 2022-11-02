@@ -18,7 +18,14 @@ function App() {
 
   }, [todos]) // any time our array of todos changes, we want to save them
 
+  const toggleTodo = (id) => {
+    const newTodos = [...todos] // should never directly modify the state variable, 
+    const todo = newTodos.find(todo => todo.id ===  id)     
+    todo.complete = !todo.complete
+    setTodos(newTodos)                       //we want to copy it and use it to create the new state
 
+
+  }
 
   const handleAddTodo = (e) => {
     const name = todoNameRef.current.value // name value is obtained using useRef status hook
@@ -34,7 +41,7 @@ function App() {
 
   return ( // JSX React's version of html
     <>
-   <TodoList todos={todos} />   {/* 'todos' is a prop being passes the todos varibale in our use state */}
+   <TodoList todos={todos} toggleTodo={toggleTodo} />   {/* 'todos' is a prop being passes the todos varibale in our use state */}
     <input ref={todoNameRef} type="text" />
     <button onClick={handleAddTodo}>Add a Todo</button>
     <button>Clear Completed Todos</button>
