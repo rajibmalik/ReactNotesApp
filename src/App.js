@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'; // hooks built into React
 import TodoList from './TodoList'
+import { nanoid } from 'nanoid'
 
 function App() {
   const [todos, setTodos] = useState([]) // Object de-structuring
@@ -12,6 +13,9 @@ function App() {
     if (name === "") return 
     console.log(name)
     todoNameRef.current.value = null // resets the previous input value after clicking button
+    setTodos(prevTodos => {
+      return [...prevTodos, {id : nanoid(), name: name, complete: false}]
+    })
 
 
   }
