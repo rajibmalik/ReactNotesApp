@@ -1,10 +1,22 @@
-import React, { useState, useRef } from 'react'; // hooks built into React
+import React, { useState, useRef, useEffect } from 'react'; // hooks built into React
 import TodoList from './TodoList'
 import { nanoid } from 'nanoid'
+
+const LOCAL_STORAGE_KEY = 'todoApp.todos'
 
 function App() {
   const [todos, setTodos] = useState([]) // Object de-structuring
   const todoNameRef = useRef()
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+    if (storedTodos) setTodos(storedTodos)
+  }, []) // empty array so it will never recall this user effect
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
+
+  }, [todos]) // any time our array of todos changes, we want to save them
 
 
 
