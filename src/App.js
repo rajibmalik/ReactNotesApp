@@ -35,8 +35,11 @@ function App() {
     setTodos(prevTodos => {
       return [...prevTodos, {id : nanoid(), name: name, complete: false}]
     })
+  }
 
-
+  const handleClearTodos = () => {
+    const newTodos = todos.filter(todo => !todo.complete)
+    setTodos(newTodos)
   }
 
   return ( // JSX React's version of html
@@ -44,8 +47,8 @@ function App() {
    <TodoList todos={todos} toggleTodo={toggleTodo} />   {/* 'todos' is a prop being passes the todos varibale in our use state */}
     <input ref={todoNameRef} type="text" />
     <button onClick={handleAddTodo}>Add a Todo</button>
-    <button>Clear Completed Todos</button>
-    <div>0 left to do</div>
+    <button onClick={handleClearTodos}>Clear Completed Todos</button>
+    <div>{todos.filter(todo => !todo.complete).length}</div>
     </>
   )
 }
